@@ -15,19 +15,42 @@ export class Transaction {
   @PrimaryGeneratedColumn('uuid', { name: 'ID' })
   public id: string;
 
-  @Column({ name: 'TITLE', nullable: false, length: 255 })
+  @Column({
+    name: 'TITLE',
+    type: 'varchar',
+    nullable: false,
+    length: 255,
+  })
   public title: string;
 
-  @Column({ name: 'SENDER', nullable: false, length: 255 })
+  @Column({
+    name: 'SENDER',
+    type: 'varchar',
+    nullable: false,
+    length: 255,
+  })
   public sender: string;
 
-  @Column({ name: 'RECEIVER', nullable: false, length: 255 })
+  @Column({
+    name: 'RECEIVER',
+    type: 'varchar',
+    nullable: false,
+    length: 255,
+  })
   public receiver: string;
 
-  @Column({ name: 'AMOUNT', nullable: false })
+  @Column({
+    name: 'AMOUNT',
+    type: 'double',
+    nullable: false,
+  })
   public amount: number;
 
-  @Column({ name: 'DATE', nullable: false })
+  @Column({
+    name: 'DATE',
+    type: 'timestamp',
+    nullable: false,
+  })
   public date: Date;
 
   @ManyToOne(() => Planner, (planner) => planner.transactions, {

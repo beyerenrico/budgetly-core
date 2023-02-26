@@ -18,7 +18,11 @@ export class TransactionsService {
     this.logger.log('START_SERVICE_METHOD: findAll');
 
     try {
-      return await this.transactionsRepository.find();
+      return await this.transactionsRepository.find({
+        relations: {
+          planner: true,
+        },
+      });
     } catch (error) {
       throw new Error(error);
     }
@@ -28,7 +32,12 @@ export class TransactionsService {
     this.logger.log('START_SERVICE_METHOD: findOne');
 
     try {
-      return await this.transactionsRepository.findOneByOrFail({ id });
+      return await this.transactionsRepository.findOneOrFail({
+        where: { id },
+        relations: {
+          planner: true,
+        },
+      });
     } catch (error) {
       throw new Error(error);
     }

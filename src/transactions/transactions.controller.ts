@@ -5,8 +5,8 @@ import {
   Delete,
   Body,
   Post,
-  Patch,
   Logger,
+  Put,
 } from '@nestjs/common';
 
 import { TransactionsService } from './transactions.service';
@@ -42,22 +42,22 @@ export class TransactionsController {
   }
 
   @Post()
-  async create(@Body() planner: Transaction) {
+  async create(@Body() transaction: Transaction) {
     this.logger.log('START_CONTROLLER_METHOD: create');
 
     try {
-      return await this.transactionsService.create(planner);
+      return await this.transactionsService.create(transaction);
     } catch (error) {
       throw new Error(error);
     }
   }
 
-  @Patch(':id')
-  async update(@Param('id') id: string, @Body() planner: Transaction) {
+  @Put(':id')
+  async update(@Param('id') id: string, @Body() transaction: Transaction) {
     this.logger.log('START_CONTROLLER_METHOD: update');
 
     try {
-      return await this.transactionsService.update(id, planner);
+      return await this.transactionsService.update(id, transaction);
     } catch (error) {
       throw new Error(error);
     }
