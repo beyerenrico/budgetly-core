@@ -14,10 +14,18 @@ export class Planner {
   @PrimaryGeneratedColumn('uuid', { name: 'ID' })
   public id: string;
 
-  @Column({ name: 'NAME', nullable: false, length: 255 })
+  @Column({
+    name: 'NAME',
+    nullable: false,
+    length: 255,
+  })
   public name: string;
 
-  @Column({ name: 'DESCRIPTION', nullable: false, length: 255 })
+  @Column({
+    name: 'DESCRIPTION',
+    nullable: false,
+    length: 255,
+  })
   public description: string;
 
   @OneToMany(() => Transaction, (transaction) => transaction.planner, {
