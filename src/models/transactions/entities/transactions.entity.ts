@@ -1,5 +1,5 @@
-import { Category } from 'src/entities/categories/entities/categories.entity';
-import { Planner } from 'src/entities/planners/entities/planner.entity';
+import { Category } from 'src/models/categories/entities/categories.entity';
+import { Planner } from 'src/models/planners/entities/planner.entity';
 
 import {
   Column,

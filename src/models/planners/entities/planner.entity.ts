@@ -1,4 +1,4 @@
-import { Transaction } from 'src/entities/transactions/entities/transactions.entity';
+import { Transaction } from 'src/models/transactions/entities/transactions.entity';
 
 import {
   Column,
@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class Category {
+export class Planner {
   @PrimaryGeneratedColumn('uuid', { name: 'ID' })
   public id: string;
 
@@ -21,7 +21,14 @@ export class Category {
   })
   public name: string;
 
-  @OneToMany(() => Transaction, (transaction) => transaction.category, {
+  @Column({
+    name: 'DESCRIPTION',
+    nullable: false,
+    length: 255,
+  })
+  public description: string;
+
+  @OneToMany(() => Transaction, (transaction) => transaction.planner, {
     cascade: false,
   })
   public transactions: Transaction[];

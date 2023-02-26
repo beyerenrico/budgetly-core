@@ -4,12 +4,12 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 import dbConfig from './db/config/ormconfig';
-import { CategoriesController } from './entities/categories/categories.controller';
-import { CategoriesModule } from './entities/categories/categories.module';
-import { PlannersController } from './entities/planners/planners.controller';
-import { PlannersModule } from './entities/planners/planners.module';
-import { TransactionsController } from './entities/transactions/transactions.controller';
-import { TransactionsModule } from './entities/transactions/transactions.module';
+import { CategoriesController } from './models/categories/categories.controller';
+import { CategoriesModule } from './models/categories/categories.module';
+import { PlannersController } from './models/planners/planners.controller';
+import { PlannersModule } from './models/planners/planners.module';
+import { TransactionsController } from './models/transactions/transactions.controller';
+import { TransactionsModule } from './models/transactions/transactions.module';
 
 @Module({
   imports: [dbConfig, PlannersModule, TransactionsModule, CategoriesModule],
