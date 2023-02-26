@@ -22,6 +22,7 @@ export class TransactionsService {
         relations: {
           planner: true,
           category: true,
+          contract: true,
         },
       });
     } catch (error) {
@@ -38,6 +39,7 @@ export class TransactionsService {
         relations: {
           planner: true,
           category: true,
+          contract: true,
         },
       });
     } catch (error) {

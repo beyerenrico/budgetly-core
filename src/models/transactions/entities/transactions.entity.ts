@@ -1,4 +1,5 @@
 import { Category } from 'src/models/categories/entities/categories.entity';
+import { Contract } from 'src/models/contracts/entities/contracts.entity';
 import { Planner } from 'src/models/planners/entities/planner.entity';
 
 import {
@@ -65,6 +66,12 @@ export class Transaction {
   })
   @JoinColumn({ name: 'CATEGORY' })
   public category: Category;
+
+  @ManyToOne(() => Contract, (contract) => contract.transactions, {
+    cascade: true,
+  })
+  @JoinColumn({ name: 'CONTRACT' })
+  public contract?: Contract;
 
   @CreateDateColumn({
     name: 'CREATED_AT',

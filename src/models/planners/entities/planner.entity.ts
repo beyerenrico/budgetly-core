@@ -1,3 +1,4 @@
+import { Contract } from 'src/models/contracts/entities/contracts.entity';
 import { Transaction } from 'src/models/transactions/entities/transactions.entity';
 
 import {
@@ -32,6 +33,11 @@ export class Planner {
     cascade: false,
   })
   public transactions: Transaction[];
+
+  @OneToMany(() => Contract, (contract) => contract.planner, {
+    cascade: false,
+  })
+  public contracts: Contract[];
 
   @CreateDateColumn({
     name: 'CREATED_AT',
