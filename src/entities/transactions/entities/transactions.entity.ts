@@ -1,4 +1,4 @@
-import { Planner } from 'src/planners/entities/planner.entity';
+import { Planner } from 'src/entities/planners/entities/planner.entity';
 
 import {
   Column,
