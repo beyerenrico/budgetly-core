@@ -21,6 +21,7 @@ export class TransactionsService {
       return await this.transactionsRepository.find({
         relations: {
           planner: true,
+          category: true,
         },
       });
     } catch (error) {
@@ -36,6 +37,7 @@ export class TransactionsService {
         where: { id },
         relations: {
           planner: true,
+          category: true,
         },
       });
     } catch (error) {

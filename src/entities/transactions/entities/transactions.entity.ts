@@ -1,3 +1,4 @@
+import { Category } from 'src/entities/categories/entities/categories.entity';
 import { Planner } from 'src/entities/planners/entities/planner.entity';
 
 import {
@@ -58,6 +59,12 @@ export class Transaction {
   })
   @JoinColumn({ name: 'PLANNER' })
   public planner: Planner;
+
+  @ManyToOne(() => Category, (category) => category.transactions, {
+    cascade: true,
+  })
+  @JoinColumn({ name: 'CATEGORY' })
+  public category: Category;
 
   @CreateDateColumn({
     name: 'CREATED_AT',
