@@ -9,8 +9,6 @@ import {
   Put,
 } from '@nestjs/common';
 
-import { FindOptionsWhere } from 'typeorm';
-
 import { TransactionsService } from './transactions.service';
 
 import { Transaction } from './entities/transactions.entity';
@@ -22,13 +20,24 @@ export class TransactionsController {
   private readonly logger = new Logger(TransactionsController.name);
 
   @Get()
-  async findAll(
-    @Body() where: FindOptionsWhere<Transaction>,
+  async findAll(): Promise<Transaction[]> {
+    this.logger.log('START_CONTROLLER_METHOD: findAll');
+
+    try {
+      return await this.transactionsService.findAll();
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  @Get('/planner/:plannerId')
+  async findAllByPlanner(
+    @Param('plannerId') plannerId: string,
   ): Promise<Transaction[]> {
     this.logger.log('START_CONTROLLER_METHOD: findAll');
 
     try {
-      return await this.transactionsService.findAll(where);
+      return await this.transactionsService.findAll(plannerId);
     } catch (error) {
       throw new Error(error);
     }

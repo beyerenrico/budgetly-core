@@ -14,11 +14,16 @@ export class ContractsService {
 
   private readonly logger = new Logger(ContractsService.name);
 
-  async findAll(): Promise<Contract[]> {
+  async findAll(plannerId?: string): Promise<Contract[]> {
     this.logger.log('START_SERVICE_METHOD: findAll');
 
     try {
       return await this.contractsRepository.find({
+        where: {
+          planner: {
+            id: plannerId,
+          },
+        },
         relations: {
           planner: true,
           transactions: true,
