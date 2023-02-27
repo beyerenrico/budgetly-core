@@ -1,7 +1,12 @@
 import { Logger, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { DeleteResult, Repository, UpdateResult } from 'typeorm';
+import {
+  DeleteResult,
+  FindOptionsWhere,
+  Repository,
+  UpdateResult,
+} from 'typeorm';
 
 import { Transaction } from './entities/transactions.entity';
 
@@ -14,11 +19,12 @@ export class TransactionsService {
 
   private readonly logger = new Logger(TransactionsService.name);
 
-  async findAll(): Promise<Transaction[]> {
+  async findAll(where: FindOptionsWhere<Transaction>): Promise<Transaction[]> {
     this.logger.log('START_SERVICE_METHOD: findAll');
 
     try {
       return await this.transactionsRepository.find({
+        where: where,
         relations: {
           planner: true,
           category: true,
