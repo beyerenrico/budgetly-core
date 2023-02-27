@@ -1,18 +1,18 @@
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
-import * as dotenv from 'dotenv';
+import 'dotenv/config';
 
-dotenv.config();
+console.log(process.env.DB_NAME);
 
-const dbConfig = TypeOrmModule.forRoot({
+const config: TypeOrmModuleOptions = {
   type: 'mysql',
-  host: process.env.DB_HOST ?? 'localhost',
-  port: Number(process.env.DB_PORT) ?? 3306,
-  username: process.env.DB_USERNAME ?? 'root',
-  password: process.env.DB_PASSWORD ?? 'root',
-  database: process.env.DB_DATABASE ?? 'budgetly-test',
+  host: process.env.DB_HOST,
+  port: parseInt(process.env.DB_PORT),
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
   autoLoadEntities: true,
   synchronize: true,
-});
+};
 
-export default dbConfig;
+export const ormConfig = config;

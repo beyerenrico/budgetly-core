@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
-import dbConfig from './db/config/ormconfig';
+import { ormConfig } from './db/config/ormconfig';
 import { CategoriesController } from './models/categories/categories.controller';
 import { CategoriesModule } from './models/categories/categories.module';
 import { ContractsController } from './models/contracts/contracts.controller';
@@ -15,7 +17,8 @@ import { TransactionsModule } from './models/transactions/transactions.module';
 
 @Module({
   imports: [
-    dbConfig,
+    ConfigModule.forRoot(),
+    TypeOrmModule.forRoot(ormConfig),
     PlannersModule,
     TransactionsModule,
     CategoriesModule,
