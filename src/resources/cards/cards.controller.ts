@@ -8,6 +8,9 @@ import {
   Delete,
 } from '@nestjs/common';
 
+import { ActiveUser } from '../iam/decorators/active-user.decorator';
+import { ActiveUserData } from '../iam/interfaces/active-user-data.interface';
+
 import { CardsService } from './cards.service';
 
 import { CreateCardDto } from './dto/create-card.dto';
@@ -23,7 +26,8 @@ export class CardsController {
   }
 
   @Get()
-  findAll() {
+  findAll(@ActiveUser() user: ActiveUserData) {
+    console.log(user);
     return this.cardsService.findAll();
   }
 
