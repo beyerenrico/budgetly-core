@@ -1,40 +1,43 @@
-import { Planner } from 'src/models/planners/entities/planner.entity';
-import { Transaction } from 'src/models/transactions/entities/transactions.entity';
+import { Contract } from 'src/resources/contracts/entities/contracts.entity';
+import { Transaction } from 'src/resources/transactions/entities/transactions.entity';
 
 import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
-  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
-export class Contract {
+export class Planner {
   @PrimaryGeneratedColumn('uuid', { name: 'ID' })
   public id: string;
 
   @Column({
-    name: 'TITLE',
-    type: 'varchar',
+    name: 'NAME',
     nullable: false,
     length: 255,
   })
-  public title: string;
+  public name: string;
 
-  @ManyToOne(() => Planner, (planner) => planner.contracts, {
-    cascade: true,
+  @Column({
+    name: 'DESCRIPTION',
+    nullable: false,
+    length: 255,
   })
-  @JoinColumn({ name: 'PLANNER' })
-  public planner: Planner;
+  public description: string;
 
-  @OneToMany(() => Transaction, (transaction) => transaction.contract, {
+  @OneToMany(() => Transaction, (transaction) => transaction.planner, {
     cascade: false,
   })
   public transactions: Transaction[];
+
+  @OneToMany(() => Contract, (contract) => contract.planner, {
+    cascade: false,
+  })
+  public contracts: Contract[];
 
   @CreateDateColumn({
     name: 'CREATED_AT',

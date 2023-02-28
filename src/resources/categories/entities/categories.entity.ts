@@ -1,4 +1,4 @@
-import { Transaction } from 'src/models/transactions/entities/transactions.entity';
+import { Transaction } from 'src/resources/transactions/entities/transactions.entity';
 
 import {
   Column,
