@@ -7,7 +7,9 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: budgetly-test
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USERNAME: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
       - 3306:3306
 
