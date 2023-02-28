@@ -11,6 +11,7 @@ import { CategoriesController } from './models/categories/categories.controller'
 import { CategoriesModule } from './models/categories/categories.module';
 import { ContractsController } from './models/contracts/contracts.controller';
 import { ContractsModule } from './models/contracts/contracts.module';
+import { IamModule } from './models/iam/iam.module';
 import { PlannersController } from './models/planners/planners.controller';
 import { PlannersModule } from './models/planners/planners.module';
 import { TransactionsController } from './models/transactions/transactions.controller';
@@ -27,6 +28,7 @@ import { UsersModule } from './models/users/users.module';
     ContractsModule,
     CardsModule,
     UsersModule,
+    IamModule,
   ],
   controllers: [
     AppController,
