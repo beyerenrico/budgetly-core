@@ -6,6 +6,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 import { ormConfig } from './db/config/ormconfig';
+import { CardsModule } from './models/cards/cards.module';
 import { CategoriesController } from './models/categories/categories.controller';
 import { CategoriesModule } from './models/categories/categories.module';
 import { ContractsController } from './models/contracts/contracts.controller';
@@ -24,6 +25,7 @@ import { UsersModule } from './models/users/users.module';
     TransactionsModule,
     CategoriesModule,
     ContractsModule,
+    CardsModule,
     UsersModule,
   ],
   controllers: [
