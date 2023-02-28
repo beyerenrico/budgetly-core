@@ -8,6 +8,7 @@ import { User } from '../users/entities/user.entity';
 
 import { AuthenticationController } from './authentication/authentication.controller';
 import { AuthenticationService } from './authentication/authentication.service';
+import { RefreshTokenIdsStorage } from './authentication/refresh-token-ids.storage';
 import jwtConfig from './config/jwt.config';
 import { BcryptService } from './hashing/bcrypt.service';
 import { HashingService } from './hashing/hashing.service';
@@ -31,6 +32,7 @@ import { AuthenticationGuard } from './authentication/guards/authentication.guar
       useClass: AuthenticationGuard,
     },
     AccessTokenGuard,
+    RefreshTokenIdsStorage,
     AuthenticationService,
   ],
 })
