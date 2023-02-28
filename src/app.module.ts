@@ -14,6 +14,7 @@ import { PlannersController } from './models/planners/planners.controller';
 import { PlannersModule } from './models/planners/planners.module';
 import { TransactionsController } from './models/transactions/transactions.controller';
 import { TransactionsModule } from './models/transactions/transactions.module';
+import { UsersModule } from './models/users/users.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { TransactionsModule } from './models/transactions/transactions.module';
     TransactionsModule,
     CategoriesModule,
     ContractsModule,
+    UsersModule,
   ],
   controllers: [
     AppController,
