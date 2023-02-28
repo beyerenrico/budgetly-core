@@ -1,30 +1,21 @@
-import { Transaction } from 'src/models/transactions/entities/transactions.entity';
-
 import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
-export class Category {
+export class User {
   @PrimaryGeneratedColumn('uuid', { name: 'ID' })
-  public id: string;
+  id: number;
 
-  @Column({
-    name: 'NAME',
-    nullable: false,
-    length: 255,
-  })
-  public name: string;
+  @Column({ name: 'EMAIL', unique: true })
+  email: string;
 
-  @OneToMany(() => Transaction, (transaction) => transaction.category, {
-    onDelete: 'SET NULL',
-  })
-  public transactions: Transaction[];
+  @Column({ name: 'PASSWORD' })
+  password: string;
 
   @CreateDateColumn({
     name: 'CREATED_AT',

@@ -1,6 +1,6 @@
-import { Category } from 'src/models/categories/entities/categories.entity';
-import { Contract } from 'src/models/contracts/entities/contracts.entity';
-import { Planner } from 'src/models/planners/entities/planner.entity';
+import { Category } from 'src/resources/categories/entities/categories.entity';
+import { Contract } from 'src/resources/contracts/entities/contracts.entity';
+import { Planner } from 'src/resources/planners/entities/planner.entity';
 
 import {
   Column,

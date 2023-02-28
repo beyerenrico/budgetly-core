@@ -1,5 +1,5 @@
-import { Planner } from 'src/models/planners/entities/planner.entity';
-import { Transaction } from 'src/models/transactions/entities/transactions.entity';
+import { Planner } from 'src/resources/planners/entities/planner.entity';
+import { Transaction } from 'src/resources/transactions/entities/transactions.entity';
 
 import {
   Column,
