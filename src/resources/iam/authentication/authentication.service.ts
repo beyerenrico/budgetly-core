@@ -135,7 +135,7 @@ export class AuthenticationService {
     }
   }
 
-  private async signToken<T>(userId: number, expiresIn: number, payload?: T) {
+  private async signToken<T>(userId: string, expiresIn: number, payload?: T) {
     return await this.jwtService.signAsync(
       {
         sub: userId,

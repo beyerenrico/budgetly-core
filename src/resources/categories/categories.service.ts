@@ -1,15 +1,21 @@
-import { Logger, Injectable } from '@nestjs/common';
+import { Logger, Injectable, Inject, Scope } from '@nestjs/common';
+import { REQUEST } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
+
+import { Request } from 'express';
 
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 
+import { ActiveUserData } from '../iam/interfaces/active-user-data.interface';
+
 import { Category } from './entities/categories.entity';
 
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 export class CategoriesService {
   constructor(
     @InjectRepository(Category)
     private categoriesRepository: Repository<Category>,
+    @Inject(REQUEST) private readonly request: Request,
   ) {}
 
   private readonly logger = new Logger(CategoriesService.name);
@@ -17,8 +23,16 @@ export class CategoriesService {
   async findAll(): Promise<Category[]> {
     this.logger.log('START_SERVICE_METHOD: findAll');
 
+    const activeUser = this.request.user as ActiveUserData;
+
     try {
-      return await this.categoriesRepository.find();
+      return await this.categoriesRepository.find({
+        where: {
+          user: {
+            id: activeUser.sub,
+          },
+        },
+      });
     } catch (error) {
       throw new Error(error);
     }

@@ -1,5 +1,6 @@
 import { Planner } from 'src/resources/planners/entities/planner.entity';
 import { Transaction } from 'src/resources/transactions/entities/transactions.entity';
+import { User } from 'src/resources/users/entities/user.entity';
 
 import {
   Column,
@@ -24,6 +25,12 @@ export class Contract {
     length: 255,
   })
   public title: string;
+
+  @ManyToOne(() => User, (user) => user.contracts, {
+    cascade: true,
+  })
+  @JoinColumn({ name: 'USER' })
+  public user: User;
 
   @ManyToOne(() => Planner, (planner) => planner.contracts, {
     cascade: true,

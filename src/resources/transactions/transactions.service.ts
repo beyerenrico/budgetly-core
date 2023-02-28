@@ -1,15 +1,21 @@
-import { Logger, Injectable } from '@nestjs/common';
+import { Logger, Injectable, Inject, Scope } from '@nestjs/common';
+import { REQUEST } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
+
+import { Request } from 'express';
 
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 
+import { ActiveUserData } from '../iam/interfaces/active-user-data.interface';
+
 import { Transaction } from './entities/transactions.entity';
 
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 export class TransactionsService {
   constructor(
     @InjectRepository(Transaction)
     private transactionsRepository: Repository<Transaction>,
+    @Inject(REQUEST) private readonly request: Request,
   ) {}
 
   private readonly logger = new Logger(TransactionsService.name);
@@ -17,11 +23,16 @@ export class TransactionsService {
   async findAll(plannerId?: string): Promise<Transaction[]> {
     this.logger.log('START_SERVICE_METHOD: findAll');
 
+    const activeUser = this.request.user as ActiveUserData;
+
     try {
       return await this.transactionsRepository.find({
         where: {
           planner: {
             id: plannerId,
+          },
+          user: {
+            id: activeUser.sub,
           },
         },
         relations: {

@@ -1,9 +1,12 @@
 import { Transaction } from 'src/resources/transactions/entities/transactions.entity';
+import { User } from 'src/resources/users/entities/user.entity';
 
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -25,6 +28,12 @@ export class Category {
     onDelete: 'SET NULL',
   })
   public transactions: Transaction[];
+
+  @ManyToOne(() => User, (user) => user.categories, {
+    cascade: true,
+  })
+  @JoinColumn({ name: 'USER' })
+  public user: User;
 
   @CreateDateColumn({
     name: 'CREATED_AT',

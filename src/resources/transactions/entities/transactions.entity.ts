@@ -1,6 +1,7 @@
 import { Category } from 'src/resources/categories/entities/categories.entity';
 import { Contract } from 'src/resources/contracts/entities/contracts.entity';
 import { Planner } from 'src/resources/planners/entities/planner.entity';
+import { User } from 'src/resources/users/entities/user.entity';
 
 import {
   Column,
@@ -54,6 +55,12 @@ export class Transaction {
     nullable: false,
   })
   public date: Date;
+
+  @ManyToOne(() => User, (user) => user.transactions, {
+    cascade: true,
+  })
+  @JoinColumn({ name: 'USER' })
+  public user: User;
 
   @ManyToOne(() => Planner, (planner) => planner.transactions, {
     cascade: true,

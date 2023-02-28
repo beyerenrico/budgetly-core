@@ -1,10 +1,13 @@
 import { Contract } from 'src/resources/contracts/entities/contracts.entity';
 import { Transaction } from 'src/resources/transactions/entities/transactions.entity';
+import { User } from 'src/resources/users/entities/user.entity';
 
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -28,6 +31,12 @@ export class Planner {
     length: 255,
   })
   public description: string;
+
+  @ManyToOne(() => User, (user) => user.planners, {
+    cascade: true,
+  })
+  @JoinColumn({ name: 'USER' })
+  public user: User;
 
   @OneToMany(() => Transaction, (transaction) => transaction.planner, {
     cascade: false,
