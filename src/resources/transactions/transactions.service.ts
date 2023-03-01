@@ -20,7 +20,7 @@ export class TransactionsService {
 
   private readonly logger = new Logger(TransactionsService.name);
 
-  async findAll(plannerId?: string): Promise<Transaction[]> {
+  async findAll(): Promise<Transaction[]> {
     this.logger.log('START_SERVICE_METHOD: findAll');
 
     const activeUser = this.request.user as ActiveUserData;
@@ -28,15 +28,11 @@ export class TransactionsService {
     try {
       return await this.transactionsRepository.find({
         where: {
-          planner: {
-            id: plannerId,
-          },
           user: {
             id: activeUser.sub,
           },
         },
         relations: {
-          planner: true,
           category: true,
           contract: true,
         },
@@ -53,7 +49,6 @@ export class TransactionsService {
       return await this.transactionsRepository.findOneOrFail({
         where: { id },
         relations: {
-          planner: true,
           category: true,
           contract: true,
         },

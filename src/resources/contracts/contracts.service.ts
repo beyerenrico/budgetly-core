@@ -20,7 +20,7 @@ export class ContractsService {
 
   private readonly logger = new Logger(ContractsService.name);
 
-  async findAll(plannerId?: string): Promise<Contract[]> {
+  async findAll(): Promise<Contract[]> {
     this.logger.log('START_SERVICE_METHOD: findAll');
 
     const activeUser = this.request.user as ActiveUserData;
@@ -28,15 +28,11 @@ export class ContractsService {
     try {
       return await this.contractsRepository.find({
         where: {
-          planner: {
-            id: plannerId,
-          },
           user: {
             id: activeUser.sub,
           },
         },
         relations: {
-          planner: true,
           transactions: true,
         },
       });
@@ -52,7 +48,6 @@ export class ContractsService {
       return await this.contractsRepository.findOneOrFail({
         where: { id },
         relations: {
-          planner: true,
           transactions: true,
         },
       });
