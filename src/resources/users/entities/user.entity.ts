@@ -1,6 +1,7 @@
+import { Card } from 'src/resources/cards/entities/card.entity';
 import { Category } from 'src/resources/categories/entities/categories.entity';
 import { Contract } from 'src/resources/contracts/entities/contracts.entity';
-import { Planner } from 'src/resources/planners/entities/planner.entity';
+import { Report } from 'src/resources/reports/entities/reports.entity';
 import { Transaction } from 'src/resources/transactions/entities/transactions.entity';
 
 import {
@@ -33,20 +34,20 @@ export class User {
   })
   public cards?: Card[];
 
-  @OneToMany(() => Planner, (planner) => planner.user, {
+  @OneToMany(() => Report, (report) => report.user, {
     cascade: false,
   })
-  public planners: Planner[];
+  public reports?: Report[];
 
   @OneToMany(() => Category, (category) => category.user, {
     cascade: false,
   })
-  public categories: Category[];
+  public categories?: Category[];
 
   @OneToMany(() => Contract, (contract) => contract.user, {
     cascade: false,
   })
-  public contracts: Contract[];
+  public contracts?: Contract[];
 
   @CreateDateColumn({
     name: 'CREATED_AT',
