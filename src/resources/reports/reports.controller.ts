@@ -9,55 +9,55 @@ import {
   Logger,
 } from '@nestjs/common';
 
-import { PlannersService } from './planners.service';
+import { ReportsService } from './reports.service';
 
-import { Planner } from './entities/planner.entity';
+import { Report } from './entities/reports.entity';
 
-@Controller('planners')
-export class PlannersController {
-  constructor(private readonly plannersService: PlannersService) {}
+@Controller('reports')
+export class ReportsController {
+  constructor(private readonly reportsService: ReportsService) {}
 
-  private readonly logger = new Logger(PlannersController.name);
+  private readonly logger = new Logger(ReportsController.name);
 
   @Get()
-  async findAll(): Promise<Planner[]> {
+  async findAll(): Promise<Report[]> {
     this.logger.log('START_CONTROLLER_METHOD: findAll');
 
     try {
-      return await this.plannersService.findAll();
+      return await this.reportsService.findAll();
     } catch (error) {
       throw new Error(error);
     }
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Planner> {
+  async findOne(@Param('id') id: string): Promise<Report> {
     this.logger.log('START_CONTROLLER_METHOD: findOne');
 
     try {
-      return this.plannersService.findOne(id);
+      return this.reportsService.findOne(id);
     } catch (error) {
       throw new Error(error);
     }
   }
 
   @Post()
-  async create(@Body() planner: Planner) {
+  async create(@Body() report: Report) {
     this.logger.log('START_CONTROLLER_METHOD: create');
 
     try {
-      return await this.plannersService.create(planner);
+      return await this.reportsService.create(report);
     } catch (error) {
       throw new Error(error);
     }
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() planner: Planner) {
+  async update(@Param('id') id: string, @Body() report: Report) {
     this.logger.log('START_CONTROLLER_METHOD: update');
 
     try {
-      return await this.plannersService.update(id, planner);
+      return await this.reportsService.update(id, report);
     } catch (error) {
       throw new Error(error);
     }
@@ -68,7 +68,7 @@ export class PlannersController {
     this.logger.log('START_CONTROLLER_METHOD: remove');
 
     try {
-      return await this.plannersService.remove(id);
+      return await this.reportsService.remove(id);
     } catch (error) {
       throw new Error(error);
     }

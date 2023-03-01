@@ -8,29 +8,32 @@ import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 
 import { ActiveUserData } from '../iam/interfaces/active-user-data.interface';
 
-import { Planner } from './entities/planner.entity';
+import { Report } from './entities/reports.entity';
 
 @Injectable({ scope: Scope.REQUEST })
-export class PlannersService {
+export class ReportsService {
   constructor(
-    @InjectRepository(Planner)
-    private plannersRepository: Repository<Planner>,
+    @InjectRepository(Report)
+    private reportsRepository: Repository<Report>,
     @Inject(REQUEST) private readonly request: Request,
   ) {}
 
-  private readonly logger = new Logger(PlannersService.name);
+  private readonly logger = new Logger(ReportsService.name);
 
-  async findAll(): Promise<Planner[]> {
+  async findAll(): Promise<Report[]> {
     this.logger.log('START_SERVICE_METHOD: findAll');
 
     const activeUser = this.request.user as ActiveUserData;
 
     try {
-      return await this.plannersRepository.find({
+      return await this.reportsRepository.find({
         where: {
           user: {
             id: activeUser.sub,
           },
+        },
+        relations: {
+          transactions: true,
         },
       });
     } catch (error) {
@@ -38,33 +41,33 @@ export class PlannersService {
     }
   }
 
-  async findOne(id: string): Promise<Planner> {
+  async findOne(id: string): Promise<Report> {
     this.logger.log('START_SERVICE_METHOD: findOne');
 
     try {
-      return await this.plannersRepository.findOneByOrFail({ id });
+      return await this.reportsRepository.findOneByOrFail({ id });
     } catch (error) {
       throw new Error(error);
     }
   }
 
-  async create(planner: Planner): Promise<Planner> {
+  async create(report: Report): Promise<Report> {
     this.logger.log('START_SERVICE_METHOD: create');
 
     try {
-      const newPlanner = await this.plannersRepository.create(planner);
-      return await this.plannersRepository.save(newPlanner);
+      const newReport = await this.reportsRepository.create(report);
+      return await this.reportsRepository.save(newReport);
     } catch (error) {
       throw new Error(error);
     }
   }
 
-  async update(id: string, planner: Planner): Promise<UpdateResult> {
+  async update(id: string, report: Report): Promise<UpdateResult> {
     this.logger.log('START_SERVICE_METHOD: update');
 
     try {
-      await this.plannersRepository.findOneByOrFail({ id });
-      return await this.plannersRepository.update(id, planner);
+      await this.reportsRepository.findOneByOrFail({ id });
+      return await this.reportsRepository.update(id, report);
     } catch (error) {
       throw new Error(error);
     }
@@ -74,8 +77,8 @@ export class PlannersService {
     this.logger.log('START_SERVICE_METHOD: remove');
 
     try {
-      await this.plannersRepository.findOneByOrFail({ id });
-      return await this.plannersRepository.delete(id);
+      await this.reportsRepository.findOneByOrFail({ id });
+      return await this.reportsRepository.delete(id);
     } catch (error) {
       throw new Error(error);
     }
