@@ -12,8 +12,8 @@ import { CategoriesModule } from './resources/categories/categories.module';
 import { ContractsController } from './resources/contracts/contracts.controller';
 import { ContractsModule } from './resources/contracts/contracts.module';
 import { IamModule } from './resources/iam/iam.module';
-import { PlannersController } from './resources/planners/planners.controller';
-import { PlannersModule } from './resources/planners/planners.module';
+import { ReportsController } from './resources/reports/reports.controller';
+import { ReportsModule } from './resources/reports/reports.module';
 import { TransactionsController } from './resources/transactions/transactions.controller';
 import { TransactionsModule } from './resources/transactions/transactions.module';
 import { UsersModule } from './resources/users/users.module';
@@ -22,7 +22,7 @@ import { UsersModule } from './resources/users/users.module';
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot(ormConfig),
-    PlannersModule,
+    ReportsModule,
     TransactionsModule,
     CategoriesModule,
     ContractsModule,
@@ -32,7 +32,7 @@ import { UsersModule } from './resources/users/users.module';
   ],
   controllers: [
     AppController,
-    PlannersController,
+    ReportsController,
     TransactionsController,
     CategoriesController,
     ContractsController,
