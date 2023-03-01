@@ -1,4 +1,3 @@
-import { Planner } from 'src/resources/planners/entities/planner.entity';
 import { Transaction } from 'src/resources/transactions/entities/transactions.entity';
 import { User } from 'src/resources/users/entities/user.entity';
 
@@ -19,29 +18,23 @@ export class Contract {
   public id: string;
 
   @Column({
-    name: 'TITLE',
+    name: 'NAME',
     type: 'varchar',
     nullable: false,
     length: 255,
   })
-  public title: string;
+  public name: string;
+
+  @OneToMany(() => Transaction, (transaction) => transaction.contract, {
+    cascade: false,
+  })
+  public transactions: Transaction[];
 
   @ManyToOne(() => User, (user) => user.contracts, {
     cascade: true,
   })
   @JoinColumn({ name: 'USER' })
   public user: User;
-
-  @ManyToOne(() => Planner, (planner) => planner.contracts, {
-    cascade: true,
-  })
-  @JoinColumn({ name: 'PLANNER' })
-  public planner: Planner;
-
-  @OneToMany(() => Transaction, (transaction) => transaction.contract, {
-    cascade: false,
-  })
-  public transactions: Transaction[];
 
   @CreateDateColumn({
     name: 'CREATED_AT',

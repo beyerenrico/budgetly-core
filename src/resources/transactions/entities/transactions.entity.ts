@@ -1,6 +1,6 @@
+import { Card } from 'src/resources/cards/entities/card.entity';
 import { Category } from 'src/resources/categories/entities/categories.entity';
 import { Contract } from 'src/resources/contracts/entities/contracts.entity';
-import { Planner } from 'src/resources/planners/entities/planner.entity';
 import { User } from 'src/resources/users/entities/user.entity';
 
 import {
@@ -19,12 +19,12 @@ export class Transaction {
   public id: string;
 
   @Column({
-    name: 'TITLE',
+    name: 'NAME',
     type: 'varchar',
     nullable: false,
     length: 255,
   })
-  public title: string;
+  public name: string;
 
   @Column({
     name: 'SENDER',
@@ -56,29 +56,29 @@ export class Transaction {
   })
   public date: Date;
 
-  @ManyToOne(() => User, (user) => user.transactions, {
+  @ManyToOne(() => Card, (card) => card.transactions, {
     cascade: true,
   })
-  @JoinColumn({ name: 'USER' })
-  public user: User;
-
-  @ManyToOne(() => Planner, (planner) => planner.transactions, {
-    cascade: true,
-  })
-  @JoinColumn({ name: 'PLANNER' })
-  public planner: Planner;
+  @JoinColumn({ name: 'CARD' })
+  public card?: Card;
 
   @ManyToOne(() => Category, (category) => category.transactions, {
     cascade: true,
   })
   @JoinColumn({ name: 'CATEGORY' })
-  public category: Category;
+  public category?: Category;
 
   @ManyToOne(() => Contract, (contract) => contract.transactions, {
     cascade: true,
   })
   @JoinColumn({ name: 'CONTRACT' })
   public contract?: Contract;
+
+  @ManyToOne(() => User, (user) => user.transactions, {
+    cascade: true,
+  })
+  @JoinColumn({ name: 'USER' })
+  public user: User;
 
   @CreateDateColumn({
     name: 'CREATED_AT',
