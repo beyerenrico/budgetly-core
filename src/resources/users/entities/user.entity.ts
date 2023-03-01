@@ -26,7 +26,12 @@ export class User {
   @OneToMany(() => Transaction, (transaction) => transaction.user, {
     cascade: false,
   })
-  public transactions: Transaction[];
+  public transactions?: Transaction[];
+
+  @OneToMany(() => Card, (card) => card.user, {
+    cascade: false,
+  })
+  public cards?: Card[];
 
   @OneToMany(() => Planner, (planner) => planner.user, {
     cascade: false,
