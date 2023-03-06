@@ -1,7 +1,9 @@
-import { Card } from 'src/resources/cards/entities/card.entity';
+import { Account } from 'src/resources/accounts/entities/account.entity';
+import { Balance } from 'src/resources/balances/entities/balances.entity';
 import { Category } from 'src/resources/categories/entities/categories.entity';
 import { Contract } from 'src/resources/contracts/entities/contracts.entity';
 import { Report } from 'src/resources/reports/entities/reports.entity';
+import { Requisition } from 'src/resources/requisitions/entities/requisition.entity';
 import { Transaction } from 'src/resources/transactions/entities/transactions.entity';
 
 import {
@@ -29,10 +31,20 @@ export class User {
   })
   public transactions?: Transaction[];
 
-  @OneToMany(() => Card, (card) => card.user, {
+  @OneToMany(() => Requisition, (requisition) => requisition.user, {
     cascade: false,
   })
-  public cards?: Card[];
+  public requisitions?: Requisition[];
+
+  @OneToMany(() => Account, (account) => account.user, {
+    cascade: false,
+  })
+  public accounts?: Account[];
+
+  @OneToMany(() => Balance, (balance) => balance.user, {
+    cascade: false,
+  })
+  public balances?: Balance[];
 
   @OneToMany(() => Report, (report) => report.user, {
     cascade: false,

@@ -30,6 +30,19 @@ export class TransactionsController {
     }
   }
 
+  @Get('account/:id')
+  async findAllByAccount(
+    @Param(':id') accountId: string,
+  ): Promise<Transaction[]> {
+    this.logger.log('START_CONTROLLER_METHOD: findAll');
+
+    try {
+      return await this.transactionsService.findAllByAccount(accountId);
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Transaction> {
     this.logger.log('START_CONTROLLER_METHOD: findOne');

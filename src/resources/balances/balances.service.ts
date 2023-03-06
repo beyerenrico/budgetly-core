@@ -9,33 +9,32 @@ import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { Account } from '../accounts/entities/account.entity';
 import { ActiveUserData } from '../iam/interfaces/active-user-data.interface';
 
-import { Transaction } from './entities/transactions.entity';
+import { Balance } from './entities/balances.entity';
 
 @Injectable({ scope: Scope.REQUEST })
-export class TransactionsService {
+export class BalancesService {
   constructor(
-    @InjectRepository(Transaction)
-    private transactionsRepository: Repository<Transaction>,
+    @InjectRepository(Balance)
+    private balancesRepository: Repository<Balance>,
     @Inject(REQUEST) private readonly request: Request,
   ) {}
 
-  private readonly logger = new Logger(TransactionsService.name);
+  private readonly logger = new Logger(BalancesService.name);
 
-  async findAll(): Promise<Transaction[]> {
+  async findAll(): Promise<Balance[]> {
     this.logger.log('START_SERVICE_METHOD: findAll');
 
     const activeUser = this.request.user as ActiveUserData;
 
     try {
-      return await this.transactionsRepository.find({
+      return await this.balancesRepository.find({
         where: {
           user: {
             id: activeUser.sub,
           },
         },
         relations: {
-          category: true,
-          contract: true,
+          account: true,
         },
       });
     } catch (error) {
@@ -43,13 +42,13 @@ export class TransactionsService {
     }
   }
 
-  async findAllByAccount(accountId: Account['id']): Promise<Transaction[]> {
+  async findAllByAccount(accountId: Account['id']): Promise<Balance[]> {
     this.logger.log('START_SERVICE_METHOD: findAllByAccount');
 
     const activeUser = this.request.user as ActiveUserData;
 
     try {
-      return await this.transactionsRepository.find({
+      return await this.balancesRepository.find({
         where: {
           user: {
             id: activeUser.sub,
@@ -59,8 +58,7 @@ export class TransactionsService {
           },
         },
         relations: {
-          category: true,
-          contract: true,
+          account: true,
         },
       });
     } catch (error) {
@@ -68,15 +66,14 @@ export class TransactionsService {
     }
   }
 
-  async findOne(id: string): Promise<Transaction> {
+  async findOne(id: string): Promise<Balance> {
     this.logger.log('START_SERVICE_METHOD: findOne');
 
     try {
-      return await this.transactionsRepository.findOneOrFail({
+      return await this.balancesRepository.findOneOrFail({
         where: { id },
         relations: {
-          category: true,
-          contract: true,
+          account: true,
         },
       });
     } catch (error) {
@@ -84,25 +81,23 @@ export class TransactionsService {
     }
   }
 
-  async create(transaction: Transaction): Promise<Transaction> {
+  async create(balance: Balance): Promise<Balance> {
     this.logger.log('START_SERVICE_METHOD: create');
 
     try {
-      const newTransaction = await this.transactionsRepository.create(
-        transaction,
-      );
-      return await this.transactionsRepository.save(newTransaction);
+      const newBalance = await this.balancesRepository.create(balance);
+      return await this.balancesRepository.save(newBalance);
     } catch (error) {
       throw new Error(error);
     }
   }
 
-  async update(id: string, transaction: Transaction): Promise<UpdateResult> {
+  async update(id: string, balance: Balance): Promise<UpdateResult> {
     this.logger.log('START_SERVICE_METHOD: update');
 
     try {
-      await this.transactionsRepository.findOneByOrFail({ id });
-      return await this.transactionsRepository.update(id, transaction);
+      await this.balancesRepository.findOneByOrFail({ id });
+      return await this.balancesRepository.update(id, balance);
     } catch (error) {
       throw new Error(error);
     }
@@ -112,8 +107,28 @@ export class TransactionsService {
     this.logger.log('START_SERVICE_METHOD: remove');
 
     try {
-      await this.transactionsRepository.findOneByOrFail({ id });
-      return await this.transactionsRepository.delete(id);
+      await this.balancesRepository.findOneByOrFail({ id });
+      return await this.balancesRepository.delete(id);
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  async removeAllByAccount(accountId: Account['id']): Promise<void> {
+    this.logger.log('START_SERVICE_METHOD: removeAllByAccount');
+
+    try {
+      const balances = await this.balancesRepository.find({
+        where: {
+          account: {
+            id: accountId,
+          },
+        },
+      });
+
+      balances.forEach(async (balance) => {
+        await this.balancesRepository.delete(balance.id);
+      });
     } catch (error) {
       throw new Error(error);
     }

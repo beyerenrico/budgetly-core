@@ -9,55 +9,55 @@ import {
   Put,
 } from '@nestjs/common';
 
-import { CardsService } from './cards.service';
+import { AccountsService } from './accounts.service';
 
-import { Card } from './entities/card.entity';
+import { Account } from './entities/account.entity';
 
-@Controller('cards')
-export class CardsController {
-  constructor(private readonly cardsService: CardsService) {}
+@Controller('accounts')
+export class AccountsController {
+  constructor(private readonly accountsService: AccountsService) {}
 
-  private readonly logger = new Logger(CardsController.name);
+  private readonly logger = new Logger(AccountsController.name);
 
   @Get()
-  async findAll(): Promise<Card[]> {
+  async findAll(): Promise<Account[]> {
     this.logger.log('START_CONTROLLER_METHOD: findAll');
 
     try {
-      return await this.cardsService.findAll();
+      return await this.accountsService.findAll();
     } catch (error) {
       throw new Error(error);
     }
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Card> {
+  async findOne(@Param('id') id: string): Promise<Account> {
     this.logger.log('START_CONTROLLER_METHOD: findOne');
 
     try {
-      return this.cardsService.findOne(id);
+      return this.accountsService.findOne(id);
     } catch (error) {
       throw new Error(error);
     }
   }
 
   @Post()
-  async create(@Body() card: Card) {
+  async create(@Body() account: Account) {
     this.logger.log('START_CONTROLLER_METHOD: create');
 
     try {
-      return await this.cardsService.create(card);
+      return await this.accountsService.create(account);
     } catch (error) {
       throw new Error(error);
     }
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() card: Card) {
+  async update(@Param('id') id: string, @Body() account: Account) {
     this.logger.log('START_CONTROLLER_METHOD: update');
 
     try {
-      return await this.cardsService.update(id, card);
+      return await this.accountsService.update(id, account);
     } catch (error) {
       throw new Error(error);
     }
@@ -68,7 +68,7 @@ export class CardsController {
     this.logger.log('START_CONTROLLER_METHOD: remove');
 
     try {
-      return await this.cardsService.remove(id);
+      return await this.accountsService.remove(id);
     } catch (error) {
       throw new Error(error);
     }

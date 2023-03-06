@@ -6,7 +6,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 import { ormConfig } from './db/config/ormconfig';
-import { CardsModule } from './resources/cards/cards.module';
+import { AccountsModule } from './resources/accounts/accounts.module';
+import { BalancesController } from './resources/balances/balances.controller';
+import { BalancesModule } from './resources/balances/balances.module';
 import { CategoriesController } from './resources/categories/categories.controller';
 import { CategoriesModule } from './resources/categories/categories.module';
 import { ContractsController } from './resources/contracts/contracts.controller';
@@ -14,6 +16,8 @@ import { ContractsModule } from './resources/contracts/contracts.module';
 import { IamModule } from './resources/iam/iam.module';
 import { ReportsController } from './resources/reports/reports.controller';
 import { ReportsModule } from './resources/reports/reports.module';
+import { RequisitionsController } from './resources/requisitions/requisitions.controller';
+import { RequisitionsModule } from './resources/requisitions/requisitions.module';
 import { TransactionsController } from './resources/transactions/transactions.controller';
 import { TransactionsModule } from './resources/transactions/transactions.module';
 import { UsersModule } from './resources/users/users.module';
@@ -22,20 +26,24 @@ import { UsersModule } from './resources/users/users.module';
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot(ormConfig),
-    ReportsModule,
-    TransactionsModule,
-    CategoriesModule,
-    ContractsModule,
-    CardsModule,
     UsersModule,
     IamModule,
+    AccountsModule,
+    CategoriesModule,
+    ContractsModule,
+    ReportsModule,
+    RequisitionsModule,
+    TransactionsModule,
+    BalancesModule,
   ],
   controllers: [
     AppController,
-    ReportsController,
-    TransactionsController,
     CategoriesController,
     ContractsController,
+    ReportsController,
+    RequisitionsController,
+    TransactionsController,
+    BalancesController,
   ],
   providers: [AppService],
 })

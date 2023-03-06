@@ -1,16 +1,14 @@
-import { Card } from 'src/resources/cards/entities/card.entity';
+import { Account } from 'src/resources/accounts/entities/account.entity';
 import { Category } from 'src/resources/categories/entities/categories.entity';
 import { Contract } from 'src/resources/contracts/entities/contracts.entity';
 import { User } from 'src/resources/users/entities/user.entity';
 
 import {
   Column,
-  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
@@ -19,48 +17,111 @@ export class Transaction {
   public id: string;
 
   @Column({
-    name: 'NAME',
+    name: 'TRANSACTION_ID',
+    type: 'varchar',
+    nullable: false,
+    length: 255,
+    unique: true,
+  })
+  public transactionId: string;
+
+  @Column({
+    name: 'STATUS',
     type: 'varchar',
     nullable: false,
     length: 255,
   })
-  public name: string;
+  public status: 'booked' | 'pending';
 
   @Column({
-    name: 'SENDER',
+    name: 'BANK_TRANSACTION_CODE',
     type: 'varchar',
     nullable: false,
     length: 255,
   })
-  public sender: string;
+  public bankTransactionCode: string;
 
   @Column({
-    name: 'RECEIVER',
-    type: 'varchar',
-    nullable: false,
-    length: 255,
-  })
-  public receiver: string;
-
-  @Column({
-    name: 'AMOUNT',
-    type: 'double',
-    nullable: false,
-  })
-  public amount: number;
-
-  @Column({
-    name: 'DATE',
+    name: 'BOOKING_DATE',
     type: 'timestamp',
     nullable: false,
   })
-  public date: Date;
+  public bookingDate: Date;
 
-  @ManyToOne(() => Card, (card) => card.transactions, {
+  @Column({
+    name: 'VALUE_DATE',
+    type: 'timestamp',
+    nullable: false,
+  })
+  public valueDate: Date;
+
+  @Column({
+    name: 'CREDITOR_ACCOUNT_IBAN',
+    type: 'varchar',
+    nullable: false,
+    length: 255,
+  })
+  public creditorAccountIban: string;
+
+  @Column({
+    name: 'CREDITOR_ACCOUNT_CURRENCY',
+    type: 'varchar',
+    nullable: true,
+    length: 255,
+  })
+  public creditorAccountCurrency?: string;
+
+  @Column({
+    name: 'DEBTOR_ACCOUNT_IBAN',
+    type: 'varchar',
+    nullable: false,
+    length: 255,
+  })
+  public debtorAccountIban: string;
+
+  @Column({
+    name: 'DEBTOR_ACCOUNT_NAME',
+    type: 'varchar',
+    nullable: true,
+    length: 255,
+  })
+  public debtorAccountName?: string;
+
+  @Column({
+    name: 'REMITTANCE_INFORMATION_UNSTRUCTURED',
+    type: 'varchar',
+    nullable: false,
+    length: 255,
+  })
+  public remittanceInformationUnstructured: string;
+
+  @Column({
+    name: 'TRANSACTION_AMOUNT',
+    type: 'varchar',
+    nullable: false,
+    length: 255,
+  })
+  public transactionAmount: string;
+
+  @Column({
+    name: 'TRANSACTION_CURRENCY',
+    type: 'varchar',
+    nullable: false,
+    length: 255,
+  })
+  public transactionCurrency: string;
+
+  @ManyToOne(() => User, (user) => user.transactions, {
     cascade: true,
   })
-  @JoinColumn({ name: 'CARD' })
-  public card?: Card;
+  @JoinColumn({ name: 'USER' })
+  public user: User;
+
+  @ManyToOne(() => Account, (account) => account.transactions, {
+    cascade: true,
+  })
+  @JoinColumn({ name: 'ACCOUNT' })
+  public account: Account;
 
   @ManyToOne(() => Category, (category) => category.transactions, {
     cascade: true,
@@ -73,27 +134,4 @@ export class Transaction {
   })
   @JoinColumn({ name: 'CONTRACT' })
   public contract?: Contract;
-
-  @ManyToOne(() => User, (user) => user.transactions, {
-    cascade: true,
-  })
-  @JoinColumn({ name: 'USER' })
-  public user: User;
-
-  @CreateDateColumn({
-    name: 'CREATED_AT',
-    nullable: false,
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-  })
-  public createdAt: Date;
-
-  @UpdateDateColumn({
-    name: 'UPDATED_AT',
-    nullable: false,
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
-  })
-  public updatedAt: Date;
 }
