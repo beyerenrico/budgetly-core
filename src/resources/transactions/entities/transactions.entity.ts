@@ -19,49 +19,49 @@ export class Transaction {
   @Column({
     name: 'TRANSACTION_ID',
     type: 'varchar',
-    nullable: false,
+    nullable: true,
     length: 255,
     unique: true,
   })
-  public transactionId: string;
+  public transactionId?: string;
 
   @Column({
     name: 'STATUS',
     type: 'varchar',
-    nullable: false,
+    nullable: true,
     length: 255,
   })
-  public status: 'booked' | 'pending';
+  public status?: 'booked' | 'pending';
 
   @Column({
     name: 'BANK_TRANSACTION_CODE',
     type: 'varchar',
-    nullable: false,
+    nullable: true,
     length: 255,
   })
-  public bankTransactionCode: string;
+  public bankTransactionCode?: string;
 
   @Column({
     name: 'BOOKING_DATE',
     type: 'timestamp',
-    nullable: false,
+    nullable: true,
   })
-  public bookingDate: Date;
+  public bookingDate?: Date;
 
   @Column({
     name: 'VALUE_DATE',
     type: 'timestamp',
-    nullable: false,
+    nullable: true,
   })
-  public valueDate: Date;
+  public valueDate?: Date;
 
   @Column({
     name: 'CREDITOR_ACCOUNT_IBAN',
     type: 'varchar',
-    nullable: false,
+    nullable: true,
     length: 255,
   })
-  public creditorAccountIban: string;
+  public creditorAccountIban?: string;
 
   @Column({
     name: 'CREDITOR_ACCOUNT_CURRENCY',
@@ -74,10 +74,10 @@ export class Transaction {
   @Column({
     name: 'DEBTOR_ACCOUNT_IBAN',
     type: 'varchar',
-    nullable: false,
+    nullable: true,
     length: 255,
   })
-  public debtorAccountIban: string;
+  public debtorAccountIban?: string;
 
   @Column({
     name: 'DEBTOR_ACCOUNT_NAME',
@@ -90,10 +90,10 @@ export class Transaction {
   @Column({
     name: 'REMITTANCE_INFORMATION_UNSTRUCTURED',
     type: 'varchar',
-    nullable: false,
+    nullable: true,
     length: 255,
   })
-  public remittanceInformationUnstructured: string;
+  public remittanceInformationUnstructured?: string;
 
   @Column({
     name: 'TRANSACTION_AMOUNT',

@@ -41,8 +41,9 @@ export class Balance {
   @Column({
     name: 'CREDIT_LIMIT_INCLUDED',
     type: 'boolean',
+    nullable: true,
   })
-  public creditLimitIncluded: boolean;
+  public creditLimitIncluded?: boolean;
 
   @ManyToOne(() => User, (user) => user.balances, {
     cascade: true,

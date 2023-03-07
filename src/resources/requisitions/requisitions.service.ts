@@ -44,9 +44,6 @@ export class RequisitionsService {
     try {
       return await this.requisitionsRepository.findOneOrFail({
         where: { id },
-        relations: {
-          user: true,
-        },
       });
     } catch (error) {
       throw new Error(error);

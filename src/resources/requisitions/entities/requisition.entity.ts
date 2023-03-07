@@ -16,6 +16,13 @@ export class Requisition {
   public id: string;
 
   @Column({
+    name: 'REQUISITION',
+    nullable: false,
+    length: 255,
+  })
+  public requisition: string;
+
+  @Column({
     name: 'INSTITUTION',
     nullable: false,
     length: 255,
